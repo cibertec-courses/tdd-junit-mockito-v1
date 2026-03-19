@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DisplayName("LeapYear - Unit testing")
+@DisplayName("LeapYear - Junit Implementation")
 public class LeapYearTest {
 
     private LeapYear leapYear;
@@ -18,19 +18,19 @@ public class LeapYearTest {
     }
 
     @Test
-    @DisplayName("Divisible by 4")
+    @DisplayName("Year Divisible by 4")
     void giveYearDivisibleBy4_whenIsLeapYear_thenTrue(){
         assertTrue(leapYear.isLeapYear(2024));
     }
 
     @Test
-    @DisplayName("Divisible by 400")
+    @DisplayName("Year Divisible by 400")
     void giveYearDivisibleBy400_whenIsLeapYear_thenTrue(){
         assertTrue(leapYear.isLeapYear(2000));
     }
 
     @Test
-    @DisplayName("Not Divisible by 4")
+    @DisplayName("Year is Not Divisible by 4")
     void givenYearNotDivisibleBy4_whenIsLeapYear_thenFalse(){
         assertFalse(leapYear.isLeapYear(2025));
     }

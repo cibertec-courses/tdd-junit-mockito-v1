@@ -1,0 +1,42 @@
+name: CI - TDD JUnit 5 and Mockito
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Repository Checkout
+        uses: actions/checkout@v4
+
+      - name: JDK 21 Setup
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'corretto'
+
+      - name: Maven dependencies cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - name: Build Project
+        run: mvn compile
+
+      - name: Run unit tests
+        run: mvn test
+
+      - name: Publish report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-report
+          path: target/surefire-reports/
