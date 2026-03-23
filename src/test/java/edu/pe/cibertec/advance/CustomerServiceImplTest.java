@@ -47,21 +47,74 @@ public class CustomerServiceImplTest {
         verify(repository, times(1)).findAll();
 
     }
+
     ///  getCustomerById(Long id):
     @Test
     @DisplayName("Returns customer when ID exists")
-    void givenExistingId_whenGetCustomerByID_thenReturnCusotmer(){
+    void givenExistingId_whenGetCustomerByID_thenReturnCusotmer() {
         Customer customer = new Customer(1L, "Juan Perez", "jperez@hotmail.com");
 
         when(repository.findById(1L)).thenReturn(Optional.of(customer));
 
         Customer result = service.getCustomerById(1L);
 
-        assertEquals("Juan Perez",result.getName());
+        assertEquals("Juan Perez", result.getName());
 
-        verify(repository,times(1)).findById(1L);
+        verify(repository, times(1)).findById(1L);
     }
 
+    ///  CustomerNotFoundException
+    @Test
+    @DisplayName("Throws CustomerNotFoundException when ID does not exist ie 1")
+    void givenNonExistingId_whenGetCustomerById_thenThrowException() {
+        Long id = 100L;
+        when(repository.findById(id)).thenReturn(Optional.empty());
+        assertThrows(CustomerNotFoundException.class, () -> {
+            service.getCustomerById(id);
+        });
+        verify(repository, times(1)).findById(id);
+    }
+
+    @Test
+    @DisplayName("Throws CustomerNotFoundException when ID does not exist ie 2")
+    void givenNonExistingId_whenGetCustomerById_thenThrowsCustomerNotFoundException() {
+        when(repository.findById(999L)).thenReturn(Optional.empty());
+        assertThrows(CustomerNotFoundException.class, () -> service.getCustomerById(999L));
+        verify(repository, times(1)).findById(999L);
+    }
+
+    ///  deleteCustomer
+    @Test
+    @DisplayName("Should delete customer when ID exists")
+    void givenExistingId_whenDeleteCustomer_thenVerifyDeletion() {
+        Long id = 1L;
+        Customer customer = new Customer(1L, "Juan", "juan@gmail.com");
+        when(repository.findById(id)).thenReturn(Optional.of(customer));
+        service.deleteCustomer(id);
+        verify(repository, times(1)).deleteById(id);
+    }
+
+    ///  Throws exception when deleting non-existing ID
+    @Test
+    @DisplayName("Should throw exception and not delete when ID does not exist")
+    void givenNonExistingId_whenDeleteCustomer_thenThrowExceptionAndNoDelete() {
+        Long id = 100L;
+        when(repository.findById(id)).thenReturn(Optional.empty());
+        assertThrows(CustomerNotFoundException.class, () -> {
+            service.deleteCustomer(id);
+        });
+        verify(repository, never()).deleteById(id);
+    }
+
+    @Test
+    @DisplayName("Throws CustomerNotFoundException when deleting not existing ID customer")
+    void givenNonExistingId_whenDeleteCustomer_thenThrowsCustomerNotFoundException() {
+        when(repository.findById(999L)).thenReturn(Optional.empty());
+        assertThrows(CustomerNotFoundException.class, () -> service.deleteCustomer(999L));
+        verify(repository, times(1)).findById(999L);
+        verify(repository, times(0)).deleteById(anyLong());
+
+    }
 
 
 
