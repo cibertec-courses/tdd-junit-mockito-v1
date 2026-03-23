@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("Password Validator - PCI DSS Guidelines")
-public class PasswordValidatorTest {
+    public class PasswordValidatorTest {
 
     private PasswordValidator validator;
 
