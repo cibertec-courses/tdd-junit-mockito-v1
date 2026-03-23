@@ -3,11 +3,11 @@ package edu.pe.cibertec.advance;
 import java.util.List;
 import java.util.Optional;
 
-public class CustomerServiceImpl implements  CustomerService {
+public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository repository;
 
-    public CustomerServiceImpl(CustomerRepository repository){
+    public CustomerServiceImpl(CustomerRepository repository) {
         this.repository = repository;
     }
 
@@ -18,13 +18,14 @@ public class CustomerServiceImpl implements  CustomerService {
     }
 
     @Override
-    public Optional<Customer> getCustomerById(Long id) {
-        return Optional.empty();
+    public Customer getCustomerById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new CustomerNotFoundException((id)));
     }
 
     @Override
-    public Optional<Customer> getCustomerByEmail(String email) {
-        return Optional.empty();
+    public Customer getCustomerByEmail(String email) {
+        return null;
     }
 
     @Override

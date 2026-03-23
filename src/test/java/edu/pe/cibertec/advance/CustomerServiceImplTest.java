@@ -9,6 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -27,7 +28,7 @@ public class CustomerServiceImplTest {
     private CustomerServiceImpl service;
 
     @Test
-    @DisplayName("Returns All customers  from repostory")
+    @DisplayName("Returns All customers from repostory")
     void giverCustomersExists_whenGetAllCustomers_thenReturnList() {
         // ARRANGE: Prepara la data
         List<Customer> customers = List.of(
@@ -46,5 +47,22 @@ public class CustomerServiceImplTest {
         verify(repository, times(1)).findAll();
 
     }
+    ///  getCustomerById(Long id):
+    @Test
+    @DisplayName("Returns customer when ID exists")
+    void givenExistingId_whenGetCustomerByID_thenReturnCusotmer(){
+        Customer customer = new Customer(1L, "Juan Perez", "jperez@hotmail.com");
+
+        when(repository.findById(1L)).thenReturn(Optional.of(customer));
+
+        Customer result = service.getCustomerById(1L);
+
+        assertEquals("Juan Perez",result.getName());
+
+        verify(repository,times(1)).findById(1L);
+    }
+
+
+
 
 }
