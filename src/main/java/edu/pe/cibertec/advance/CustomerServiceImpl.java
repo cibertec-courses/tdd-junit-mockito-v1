@@ -12,29 +12,28 @@ public class CustomerServiceImpl implements  CustomerService {
     }
 
 
-
     @Override
-    public List<Customer> findAll() {
-        return List.of();
+    public List<Customer> getAllCustomer() {
+        return repository.findAll();
     }
 
     @Override
-    public Optional<Customer> findById(Long id) {
+    public Optional<Customer> getCustomerById(Long id) {
         return Optional.empty();
     }
 
     @Override
-    public Optional<Customer> findByEmail(String email) {
+    public Optional<Customer> getCustomerByEmail(String email) {
         return Optional.empty();
     }
 
     @Override
-    public Customer save(Customer customer) {
+    public Customer registerCustomer(Customer customer) {
         return null;
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteCustomer(Long id) {
 
     }
 }

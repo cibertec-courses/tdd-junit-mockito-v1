@@ -4,13 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CustomerService {
-    List<Customer> findAll();
+    List<Customer> getAllCustomer();
 
-    Optional<Customer> findById(Long id);
+    Optional<Customer> getCustomerById(Long id);
 
-    Optional<Customer> findByEmail(String email);
+    Optional<Customer> getCustomerByEmail(String email);
 
-    Customer save(Customer customer);
+    Customer registerCustomer(Customer customer);
 
-    void deleteById(Long id);
+    void deleteCustomer(Long id);
 }
